@@ -29,6 +29,7 @@ function main {
   common_config
   auth_config
   servers_config
+  mkdir $PWD/tmp
 }
 
 function common_config {
