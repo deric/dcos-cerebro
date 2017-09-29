@@ -34,7 +34,8 @@ function main {
 function common_config {
   CEREBRO_REST_HIST_SIZE="${CEREBRO_REST_HIST_SIZE:-50}"
   CEREBRO_SECRET="${CEREBRO_SECRET:-$(date +%s | sha256sum | base64 | head -c 64 ; echo)}"
-  CEREBRO_DB_PATH="${CEREBRO_DB_PATH:-./cerebro.db}"
+  CEREBRO_DB_DRIVER="${CEREBRO_DB_DRIVER:-org.sqlite.JDBC}"
+  CEREBRO_DB_URL="${CEREBRO_DB_URL:-jdbc:sqlite:./cerebro.db}"
 
   cat > "application.conf" <<EOF
 # Secret will be used to sign session cookies, CSRF tokens and for other encryption utilities.
@@ -53,7 +54,8 @@ pidfile.path=/dev/null
 rest.history.size = ${CEREBRO_REST_HIST_SIZE} // defaults to 50 if not specified
 
 # Path of local database file
-data.path = "${CEREBRO_DB_PATH}"
+slick.dbs.default.db.driver = "${CEREBRO_DB_DRIVER}"
+slick.dbs.default.db.url = "${CEREBRO_DB_URL}"
 EOF
 }
 
@@ -127,8 +129,6 @@ hosts = [
   ${servers}
 ]
 EOF
-  else
-    err "servers empty"
   fi
 }
 
