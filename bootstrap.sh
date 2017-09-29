@@ -29,7 +29,6 @@ function main {
   common_config
   auth_config
   servers_config
-  mkdir -p $PWD/tmp && chmod -R 0777 $PWD/tmp
 }
 
 function common_config {
